@@ -62,17 +62,13 @@ javascript:(function(){
         if (power[indices[i+1]+1] == power[indices[i]+1]) {
           var duration = (time[indices[i+1]+1]-time[indices[i]+1])/1000
           duration += 1;
-          // we have a continuous transition into a ramp after the current block and not processing the last block
-          if ((indices[i+1]+1 != indices[i+2]) && i+2 < indices.length) {
+          // we have a continuous transition into a ramp after the current block
+          if ((indices[i+1]+1 != indices[i+2])) {
               duration -= 1;
           }
           workout += `${simplify_duration(duration)} @ ${Math.round(100*power[indices[i+1]+1]/ftp).toString()}% FTP\n`
         } else {
           var duration = (time[indices[i+1]+1]-time[indices[i]+1])/1000
-          // processing the last block and it is a ramp or we have discontinuity after the current ramp block
-          if ((i+2 > indices.length-1) || ((indices[i+1] + 1) == indices[i+2]) ){
-              duration += 1;
-          }
           workout += `${simplify_duration(duration)} from ${Math.round(100*power[indices[i]+1]/ftp).toString()} to ${Math.round(100*power[indices[i+1]+1]/ftp).toString()}% FTP\n`
         }
       } 
